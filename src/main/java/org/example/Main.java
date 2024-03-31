@@ -22,6 +22,5 @@ public class Main {
         int indexedColumnId = Integer.parseInt(args[3]);
         String inputFilePath = args[5];
         String outputFilePath = args[7];
-
     }
 }
