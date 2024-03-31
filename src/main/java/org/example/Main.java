@@ -1,8 +1,8 @@
 package org.example;
 
 
-import javax.naming.directory.SearchResult;
 import java.io.*;
+import javax.naming.directory.SearchResult;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
@@ -14,7 +14,11 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) throws IOException {
         if (args.length != 8) {
-            System.err.println("Usage: java -jar AirportSearch.jar --data <csv-file> --indexed-column-id <column-id> --input-file <input-file.txt> --output-file <output-file.json>");
+            System.err.println("Usage: java " +
+                    "-jar AirportSearch.jar " +
+                    "--data <csv-file> --indexed-column-id <column-id> " +
+                    "--input-file <input-file.txt> " +
+                    "--output-file <output-file.json>");
             return;
         }
 
