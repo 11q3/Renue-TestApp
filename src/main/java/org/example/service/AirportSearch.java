@@ -1,22 +1,21 @@
 package org.example.service;
 
 
-import org.example.model.SearchResult;
+import org.example.util.Trie;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AirportSearch {
     private Trie trie;
     private int indexedColumnId;
 
+    private static long initTime;
+
     public Trie initialize(String dataFilePath, int indexedColumnId) throws IOException {
+        long startTime = System.currentTimeMillis();
         trie = new Trie();
         this.indexedColumnId = indexedColumnId;
 
@@ -28,7 +27,12 @@ public class AirportSearch {
                 int value = Integer.parseInt(values.get(0));
                 trie.insert(key, value);
             }
+            initTime = System.currentTimeMillis() - startTime;
             return trie;
-        }
+        } //TODO do something with try catch
+    }
+
+    public long getInitTime() {
+        return initTime;
     }
 }

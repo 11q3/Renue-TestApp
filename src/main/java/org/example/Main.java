@@ -1,18 +1,14 @@
 package org.example;
 
 
+import org.example.model.SearchResult;
 import org.example.service.AirportSearch;
-import org.example.service.Trie;
+import org.example.util.FileUtils;
+import org.example.util.Trie;
 
 import java.io.*;
-import javax.naming.directory.SearchResult;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -31,10 +27,21 @@ public class Main {
         String outputFilePath = args[7];
 
         AirportSearch airportSearch = new AirportSearch();
-
         Trie trie = airportSearch.initialize(csvFile, indexedColumnId);
+        System.out.println(trie.search("Bow")); // [4275, 7848, 3600]
 
-        System.out.println(trie.search("Bow"));
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
+            List<SearchResult> results = new ArrayList<>();
+            String line;
+            long startTime;
 
+            while ((line = reader.readLine()) != null) {
+                startTime = System.currentTimeMillis();
+                List<Integer> matches = trie.search(line);
+                results.add(new SearchResult(line, matches, System.currentTimeMillis() - startTime));
+            }
+
+            FileUtils.outputResults(outputFilePath, results, airportSearch.getInitTime());
+        }
     }
 }

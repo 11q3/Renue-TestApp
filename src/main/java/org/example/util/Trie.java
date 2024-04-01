@@ -1,4 +1,6 @@
-package org.example.service;
+package org.example.util;
+
+import org.example.model.SearchResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +25,7 @@ public class Trie {
         currentNode.isEndOfWord = true;
     }
 
-    public List<String> search(String key) {
+    public List<Integer> search(String key) {
         TrieNode node = root;
         for (int i = 0; i < key.length(); i++) {
             char ch = key.charAt(i);
@@ -36,10 +38,10 @@ public class Trie {
         return getValues(node);
     }
 
-    private List<String> getValues(TrieNode node) {
-        List<String> values = new ArrayList<>();
+    private List<Integer> getValues(TrieNode node) {
+        List<Integer> values = new ArrayList<>();
         if (node.isEndOfWord) {
-            values.add(String.valueOf(node.value));
+            values.add(node.value);
         }
         for (TrieNode child : node.children.values()) {
             values.addAll(getValues(child));
