@@ -1,6 +1,8 @@
 package org.example;
 
 
+import org.example.service.AirportSearch;
+
 import java.io.*;
 import javax.naming.directory.SearchResult;
 import java.nio.file.Files;
@@ -26,5 +28,9 @@ public class Main {
         int indexedColumnId = Integer.parseInt(args[3]);
         String inputFilePath = args[5];
         String outputFilePath = args[7];
+
+        AirportSearch airportSearch = new AirportSearch();
+
+        airportSearch.initialize(csvFile, indexedColumnId);
     }
 }
