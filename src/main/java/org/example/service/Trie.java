@@ -9,7 +9,7 @@ public class Trie {
     private final TrieNode root;
 
     public Trie() {
-        root = new TrieNode(0);
+        root = new TrieNode(null); //TODO check what is better here, Integer and null value or int and -1 value
     }
 
     public void insert(String key, int value) {
@@ -23,25 +23,36 @@ public class Trie {
         currentNode.isEndOfWord = true;
     }
 
-    public String search(String key) {
+    public List<String> search(String key) {
         TrieNode node = root;
-        for(int i = 0; i < key.length(); i++) {
+        for (int i = 0; i < key.length(); i++) {
             char ch = key.charAt(i);
-            if(node.children.containsKey(ch)) {
+            if (node.children.containsKey(ch)) {
                 node = node.children.get(ch);
             } else {
-                return "";
+                return new ArrayList<>();
             }
         }
-        return String.valueOf(node.value);
+        return getValues(node);
+    }
+
+    private List<String> getValues(TrieNode node) {
+        List<String> values = new ArrayList<>();
+        if (node.isEndOfWord) {
+            values.add(String.valueOf(node.value));
+        }
+        for (TrieNode child : node.children.values()) {
+            values.addAll(getValues(child));
+        }
+        return values;
     }
 
     public static class TrieNode {
-        private final int value;
+        private final Integer value;
         boolean isEndOfWord;
         private final Map<Character, TrieNode> children;
 
-        public TrieNode(int value) {
+        public TrieNode(Integer value) {
             this.value = value;
             this.children = new HashMap<>();
         }

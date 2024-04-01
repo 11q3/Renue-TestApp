@@ -18,6 +18,7 @@ public class AirportSearch {
 
     public Trie initialize(String dataFilePath, int indexedColumnId) throws IOException {
         trie = new Trie();
+        this.indexedColumnId = indexedColumnId;
 
         try (BufferedReader br = new BufferedReader(new FileReader(dataFilePath))){
             String line;
@@ -30,6 +31,4 @@ public class AirportSearch {
             return trie;
         }
     }
-
-
 }

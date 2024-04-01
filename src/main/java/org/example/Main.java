@@ -33,7 +33,8 @@ public class Main {
         AirportSearch airportSearch = new AirportSearch();
 
         Trie trie = airportSearch.initialize(csvFile, indexedColumnId);
-        System.out.println(trie.search("Kleine"));
+
+        System.out.println(trie.search("Bow"));
 
     }
 }
