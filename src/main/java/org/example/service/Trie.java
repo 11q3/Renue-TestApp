@@ -13,28 +13,32 @@ public class Trie {
     }
 
     public void insert(String key, int value) {
-        TrieNode current = root;
+        TrieNode currentNode = root;
         for (char ch : key.toCharArray()) {
-            if (!current.children.containsKey(ch)) {
-                current.children.put(ch, new TrieNode(value));
+            if (!currentNode.children.containsKey(ch)) {
+                currentNode.children.put(ch, new TrieNode(value));
             }
-            current = current.children.get(ch);
+            currentNode = currentNode.children.get(ch);
         }
+        currentNode.isEndOfWord = true;
     }
 
-    /*public int search(String prefix) {
+    public String search(String key) {
         TrieNode node = root;
-        for (char c : prefix.toCharArray()) {
-            if (!node.children.containsKey(c)) {
-                return -1;
+        for(int i = 0; i < key.length(); i++) {
+            char ch = key.charAt(i);
+            if(node.children.containsKey(ch)) {
+                node = node.children.get(ch);
+            } else {
+                return "";
             }
-            node = node.children.get(c);
         }
-        return node.value;
-    }*/
+        return String.valueOf(node.value);
+    }
 
     public static class TrieNode {
         private final int value;
+        boolean isEndOfWord;
         private final Map<Character, TrieNode> children;
 
         public TrieNode(int value) {

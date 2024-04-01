@@ -2,6 +2,7 @@ package org.example;
 
 
 import org.example.service.AirportSearch;
+import org.example.service.Trie;
 
 import java.io.*;
 import javax.naming.directory.SearchResult;
@@ -31,6 +32,8 @@ public class Main {
 
         AirportSearch airportSearch = new AirportSearch();
 
-        airportSearch.initialize(csvFile, indexedColumnId);
+        Trie trie = airportSearch.initialize(csvFile, indexedColumnId);
+        System.out.println(trie.search("Kleine"));
+
     }
 }
