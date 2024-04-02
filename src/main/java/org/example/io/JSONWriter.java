@@ -1,6 +1,6 @@
-package org.example.util;
+package org.example.io;
 
-import org.example.model.SearchResult;
+import org.example.data.SearchResult;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class FileUtils {
+public class JSONWriter {
     public static void outputResults(String outputFile, List<SearchResult> results, long initTime) throws IOException {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(outputFile))) {
             writer.write("{\"initTime\": " + initTime + ", \"result\": [");
