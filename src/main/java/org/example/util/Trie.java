@@ -47,7 +47,6 @@ public class Trie {
         for (TrieNode child : node.children.values()) {
             values.addAll(getValues(child));
         }
-
         return values;
     }
 
