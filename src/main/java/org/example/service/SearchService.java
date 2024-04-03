@@ -16,18 +16,17 @@ public class SearchService {
         Trie trie = new Trie();
         System.out.println(Double.parseDouble(String.valueOf((rn.totalMemory() - rn.freeMemory() - 7*1024*1024)))/1024/1024);
 
-
         try (BufferedReader br = new BufferedReader(new FileReader(dataFilePath))) {
             StringBuilder values = new StringBuilder();
             List<String> valuesList;
             String line;
 
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine())!= null) {
 
                 values.setLength(0);
 
-                for (String s : line.replace("\"", "").split(" ")) {
-                    values.append(s).append(" ");
+                for (String s : line.replace("\"", "").split(",")) {
+                    values.append(s).append(",");
                 }
 
                 valuesList = List.of(values.toString().trim().split(","));
