@@ -1,6 +1,7 @@
 package org.example.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +17,11 @@ public class Trie {
         TrieNode currentNode = root;
         for (char ch : key.toCharArray()) {
             if (!currentNode.children.containsKey(ch)) {
-                currentNode.children.put(ch, new TrieNode(value));
+                currentNode.children.put(ch, new TrieNode(null));
             }
             currentNode = currentNode.children.get(ch);
         }
+        currentNode.value = value;
         currentNode.isEndOfWord = true;
     }
 
@@ -30,7 +32,7 @@ public class Trie {
             if (node.children.containsKey(ch)) {
                 node = node.children.get(ch);
             } else {
-                return new ArrayList<>();
+                return Collections.emptyList();
             }
         }
         return getValues(node);
@@ -38,17 +40,19 @@ public class Trie {
 
     private List<Integer> getValues(TrieNode node) {
         List<Integer> values = new ArrayList<>();
-        if (node.isEndOfWord)
+        if (node.isEndOfWord) {
             values.add(node.value);
+        }
 
-        for (TrieNode child : node.children.values())
+        for (TrieNode child : node.children.values()) {
             values.addAll(getValues(child));
+        }
 
         return values;
     }
 
     public static class TrieNode {
-        private final Integer value;
+        private Integer value;
         boolean isEndOfWord;
         private final Map<Character, TrieNode> children;
 

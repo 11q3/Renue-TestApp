@@ -29,7 +29,6 @@ public class InputReader {
                 results.add(new SearchResult(line, matches, Instant.now().toEpochMilli() - startTime));
             }
         }
-
         return results;
     }
 }
