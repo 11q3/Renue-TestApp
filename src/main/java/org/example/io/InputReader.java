@@ -11,22 +11,10 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A class to read input and search for matches using a given Trie.
- */
 public class InputReader {
-
-    /**
-     * Reads input from a file and returns a list of SearchResult objects.
-     *
-     * @param inputFilePath The path to the input file.
-     * @param trie          The Trie to search for matches.
-     * @return A list of SearchResult objects.
-     * @throws IOException If there is an error reading the input file.
-     */
     public static List<SearchResult> readInput(String inputFilePath, Trie trie) throws IOException {
         if (inputFilePath == null || trie == null) {
-            throw new IllegalArgumentException("Input file path and Trie cannot be null.");
+            throw new IllegalArgumentException("Input file path or Trie cannot be null.");
         }
 
         List<SearchResult> results = new ArrayList<>();
