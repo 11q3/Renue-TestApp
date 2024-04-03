@@ -3,7 +3,6 @@ package org.example.io;
 import org.example.data.SearchResult;
 import org.example.util.Trie;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,18 +16,15 @@ public class InputReader {
             throw new IllegalArgumentException("Input file path or Trie cannot be null.");
         }
 
+        List<String> lines = Files.readAllLines(Paths.get(inputFilePath));
+        final long startTime = Instant.now().toEpochMilli();
         List<SearchResult> results = new ArrayList<>();
 
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get(inputFilePath))) {
-            String line;
-            long startTime;
-
-            while ((line = reader.readLine()) != null) {
-                startTime = Instant.now().toEpochMilli();
-                List<Integer> matches = trie.search(line);
-                results.add(new SearchResult(line, matches, Instant.now().toEpochMilli() - startTime));
-            }
+        for (String line : lines) {
+            List<Integer> matches = trie.search(line);
+            results.add(new SearchResult(line, matches, Instant.now().toEpochMilli() - startTime));
         }
+
         return results;
     }
 }

@@ -11,6 +11,8 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        Runtime rn = Runtime.getRuntime();
+        System.out.println(rn.totalMemory() - rn.freeMemory());
         if (args.length != 8) {
             System.err.println("Usage: java " +
                     "-jar AirportSearch.jar " +
@@ -21,12 +23,17 @@ public class Main {
         }
 
         String csvFile = args[1];
-        int indexedColumnId = Integer.parseInt(args[3]);
+        int indexedColumnId = Integer.parseInt(args[3])-1;
         String inputFilePath = args[5];
+        System.out.println(rn.totalMemory() - rn.freeMemory());
+
         String outputFilePath = args[7];
+
 
         SearchService searchService = new SearchService();
         Trie trie = searchService.initialize(csvFile, indexedColumnId);
+
+        System.out.println(Double.parseDouble(String.valueOf((rn.totalMemory() - rn.freeMemory() - 7*1024*1024)))/1024/1024);
 
         List<SearchResult> results =
                 InputReader.readInput(inputFilePath, trie);

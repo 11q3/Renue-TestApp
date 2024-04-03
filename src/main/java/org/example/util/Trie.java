@@ -10,14 +10,14 @@ public class Trie {
     private final TrieNode root;
 
     public Trie() {
-        root = new TrieNode(null);
+        root = new TrieNode(-1);
     }
 
     public void insert(String key, int value) {
         TrieNode currentNode = root;
         for (char ch : key.toCharArray()) {
             if (!currentNode.children.containsKey(ch)) {
-                currentNode.children.put(ch, new TrieNode(null));
+                currentNode.children.put(ch, new TrieNode(-1));
             }
             currentNode = currentNode.children.get(ch);
         }
@@ -52,11 +52,11 @@ public class Trie {
     }
 
     public static class TrieNode {
-        private Integer value;
+        private int value;
         boolean isEndOfWord;
         private final Map<Character, TrieNode> children;
 
-        public TrieNode(Integer value) {
+        public TrieNode(int value) {
             this.value = value;
             this.children = new HashMap<>();
         }
