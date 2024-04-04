@@ -7,57 +7,78 @@ import java.util.List;
 import java.util.Map;
 
 public class Trie {
+    private static class TrieNode {
+        int value;
+        boolean isEndOfWord;
+        List<TrieNode> children;
+        int codePoint;
+
+        public TrieNode() {
+            children = new ArrayList<>();
+            value = -1;
+            isEndOfWord = false;
+            codePoint = -1;
+        }
+
+        public void addChild(int codePoint, TrieNode node) {
+            node.codePoint = codePoint;
+            children.add(node);
+        }
+
+        public TrieNode getChild(int codePoint) {
+            for (TrieNode node : children) {
+                if (node.codePoint == codePoint) {
+                    return node;
+                }
+            }
+            return null;
+        }
+    }
+
     private final TrieNode root;
 
     public Trie() {
-        root = new TrieNode(null);
+        root = new TrieNode();
     }
 
     public void insert(String key, int value) {
         TrieNode currentNode = root;
-        for (char ch : key.toCharArray()) {
-            if (!currentNode.children.containsKey(ch)) {
-                currentNode.children.put(ch, new TrieNode(null));
+        for (int i = 0; i < key.length(); i++) {
+            int codePoint = key.codePointAt(i);
+            TrieNode childNode = currentNode.getChild(codePoint);
+            if (childNode == null) {
+                childNode = new TrieNode();
+                currentNode.addChild(codePoint, childNode);
             }
-            currentNode = currentNode.children.get(ch);
+            currentNode = childNode;
         }
         currentNode.value = value;
         currentNode.isEndOfWord = true;
     }
 
     public List<Integer> search(String key) {
-        TrieNode node = root;
+        TrieNode currentNode = root;
         for (int i = 0; i < key.length(); i++) {
-            char ch = key.charAt(i);
-            if (node.children.containsKey(ch)) {
-                node = node.children.get(ch);
-            } else {
+            int codePoint = key.codePointAt(i);
+            System.out.println(codePoint);
+            TrieNode childNode = currentNode.getChild(codePoint);
+            if (childNode == null) {
                 return Collections.emptyList();
             }
+            currentNode = childNode;
         }
-        return getValues(node);
+        return getValues(currentNode);
     }
+
 
     private List<Integer> getValues(TrieNode node) {
         List<Integer> values = new ArrayList<>();
         if (node.isEndOfWord) {
             values.add(node.value);
         }
-
-        for (TrieNode child : node.children.values()) {
+        for (TrieNode child : node.children) {
             values.addAll(getValues(child));
         }
         return values;
-    }
-
-    public static class TrieNode {
-        private Integer value;
-        boolean isEndOfWord;
-        private final Map<Character, TrieNode> children;
-
-        public TrieNode(Integer value) {
-            this.value = value;
-            this.children = new HashMap<>();
-        }
     }
 }
