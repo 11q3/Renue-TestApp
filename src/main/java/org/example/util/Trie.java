@@ -43,8 +43,8 @@ public class Trie {
 
     public void insert(String key, int value) {
         TrieNode currentNode = root;
-        for (int i = 0; i < key.length(); ++i) {
-            int codePoint = Character.codePointAt(key, i);
+        for (int i = 0; i < key.length(); i++) {
+            int codePoint = key.codePointAt(i);
             TrieNode childNode = currentNode.getChild(codePoint);
             if (childNode == null) {
                 childNode = new TrieNode();
@@ -54,22 +54,22 @@ public class Trie {
         }
         currentNode.value = value;
         currentNode.isEndOfWord = true;
-        currentNode.codePoint = -1;
     }
 
     public List<Integer> search(String key) {
         TrieNode currentNode = root;
-        for (int i = 0; i < key.length(); ++i) {
-            int codePoint = Character.codePointAt(key, i);
+        for (int i = 0; i < key.length(); i++) {
+            int codePoint = key.codePointAt(i);
+            System.out.println(codePoint);
             TrieNode childNode = currentNode.getChild(codePoint);
-
             if (childNode == null) {
-                return getValues(currentNode);
+                return Collections.emptyList();
             }
             currentNode = childNode;
         }
         return getValues(currentNode);
     }
+
 
     private List<Integer> getValues(TrieNode node) {
         List<Integer> values = new ArrayList<>();
