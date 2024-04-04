@@ -14,17 +14,25 @@ public class JSONWriter {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(outputFile))) {
             writer.write("{\"initTime\": ");
             writer.write(String.valueOf(initTime));
-            writer.write(", \"result\": [");
+            writer.write(", \"result\":[");
+            writer.newLine();
 
             Iterator<SearchResult> iterator = results.iterator();
             while (iterator.hasNext()) {
                 SearchResult result = iterator.next();
-                writer.write("{\"search\": \"");
+                writer.write("    {\"search\": \"");
                 writer.write(result.search);
-                writer.write("\", \"result\": ");
-                writer.write(String.valueOf(result.result));
-                writer.write(", \"time\": ");
+                writer.write("\", \"result\": [");
+                System.out.println(result.result.toString());
+                writer.write(result.result.toString()
+                        .replace("[", "")
+                        .replace("]", ""));
+                writer.write("],");
+                writer.write("\"time\": ");
+
+
                 writer.write(String.valueOf(result.time));
+                writer.write("}");
 
                 if (iterator.hasNext()) {
                     writer.write(",");
@@ -32,8 +40,8 @@ public class JSONWriter {
 
                 writer.newLine();
             }
-
             writer.write("]}");
+            writer.newLine();
         }
     }
 }

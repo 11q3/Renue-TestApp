@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class InputReader {
@@ -21,7 +22,7 @@ public class InputReader {
         List<SearchResult> results = new ArrayList<>();
 
         for (String line : lines) {
-            List<Integer> matches = trie.search(line);
+            Collection<? extends List<Integer>> matches = trie.search(line);
             results.add(new SearchResult(line, matches, Instant.now().toEpochMilli() - startTime));
         }
 

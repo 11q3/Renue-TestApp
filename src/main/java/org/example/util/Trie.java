@@ -1,21 +1,17 @@
 package org.example.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Trie {
     private static class TrieNode {
-        int value;
         boolean isEndOfWord;
         List<TrieNode> children;
         int codePoint;
+        List<Integer> values;
 
         public TrieNode() {
             children = new ArrayList<>();
-            value = -1;
+            values = new ArrayList<>();
             isEndOfWord = false;
             codePoint = -1;
         }
@@ -41,7 +37,7 @@ public class Trie {
         root = new TrieNode();
     }
 
-    public void insert(String key, int value) {
+    public void insert(String key, List<Integer> values) {
         TrieNode currentNode = root;
         for (int i = 0; i < key.length(); i++) {
             int codePoint = key.codePointAt(i);
@@ -52,15 +48,14 @@ public class Trie {
             }
             currentNode = childNode;
         }
-        currentNode.value = value;
+        currentNode.values = values;
         currentNode.isEndOfWord = true;
     }
 
-    public List<Integer> search(String key) {
+    public Collection<? extends List<Integer>> search(String key) {
         TrieNode currentNode = root;
         for (int i = 0; i < key.length(); i++) {
             int codePoint = key.codePointAt(i);
-            System.out.println(codePoint);
             TrieNode childNode = currentNode.getChild(codePoint);
             if (childNode == null) {
                 return Collections.emptyList();
@@ -70,11 +65,10 @@ public class Trie {
         return getValues(currentNode);
     }
 
-
-    private List<Integer> getValues(TrieNode node) {
-        List<Integer> values = new ArrayList<>();
+    private Collection<? extends List<Integer>> getValues(TrieNode node) {
+        List<List<Integer>> values = new LinkedList<>();
         if (node.isEndOfWord) {
-            values.add(node.value);
+            values.add(node.values);
         }
         for (TrieNode child : node.children) {
             values.addAll(getValues(child));
