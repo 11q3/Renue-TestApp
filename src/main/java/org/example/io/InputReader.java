@@ -6,11 +6,8 @@ import org.example.util.Trie;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class InputReader {
@@ -21,15 +18,17 @@ public class InputReader {
 
         List<SearchResult> results = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(inputFilePath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(inputFilePath), 1)) {
             String line;
-            long startTime = Instant.now().toEpochMilli();
 
             while ((line = br.readLine())!= null) {
+                long startTime = Instant.now().toEpochMilli();
+
                 List<Short> matches = trie.search(line);
-                results.add(new SearchResult(line, matches, Instant.now().toEpochMilli() - startTime));
-            }
-        }
+
+                long endTime = Instant.now().toEpochMilli();
+                results.add(new SearchResult(line, matches, endTime - startTime));
+            }}
 
         return results;
     }
