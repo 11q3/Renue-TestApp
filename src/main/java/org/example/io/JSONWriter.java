@@ -23,7 +23,6 @@ public class JSONWriter {
                 writer.write("    {\"search\": \"");
                 writer.write(result.search);
                 writer.write("\", \"result\": [");
-                System.out.println(result.result.toString());
                 writer.write(result.result.toString()
                         .replace("[", "")
                         .replace("]", ""));

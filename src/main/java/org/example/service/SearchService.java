@@ -6,10 +6,7 @@ import org.example.util.Trie;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SearchService {
     private static long initTime;
@@ -18,9 +15,8 @@ public class SearchService {
     public Trie initialize(String dataFilePath, int indexedColumnId) throws IOException {
         long startTime = System.currentTimeMillis();
         Trie trie = new Trie();
-        System.out.println(Double.parseDouble(String.valueOf((rn.totalMemory() - rn.freeMemory() - 7*1024*1024)))/1024/1024);
 
-        Map<String, List<Integer>> data = new HashMap<>();
+        Map<String, List<Short>> data = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(dataFilePath))) {
             StringBuilder values = new StringBuilder();
@@ -37,7 +33,7 @@ public class SearchService {
 
                 valuesList = List.of(values.toString().trim().split(","));
                 String key = valuesList.get(indexedColumnId);
-                int value = Integer.parseInt(valuesList.get(0));
+                short value = Short.parseShort(valuesList.get(0));
 
                 if (!data.containsKey(key)) {
                     data.put(key, new ArrayList<>());
@@ -46,7 +42,7 @@ public class SearchService {
             }
         }
 
-        for (Map.Entry<String, List<Integer>> entry : data.entrySet()) {
+        for (Map.Entry<String, List<Short>> entry : data.entrySet()) {
             trie.insert(entry.getKey(), entry.getValue());
         }
 

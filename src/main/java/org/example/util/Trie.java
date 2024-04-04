@@ -7,7 +7,7 @@ public class Trie {
         boolean isEndOfWord;
         List<TrieNode> children;
         int codePoint;
-        List<Integer> values;
+        List<Short> values;
 
         public TrieNode() {
             children = new ArrayList<>();
@@ -37,7 +37,7 @@ public class Trie {
         root = new TrieNode();
     }
 
-    public void insert(String key, List<Integer> values) {
+    public void insert(String key, List<Short> values) {
         TrieNode currentNode = root;
         for (int i = 0; i < key.length(); i++) {
             int codePoint = key.codePointAt(i);
@@ -52,7 +52,7 @@ public class Trie {
         currentNode.isEndOfWord = true;
     }
 
-    public Collection<? extends List<Integer>> search(String key) {
+    public List<Short> search(String key) {
         TrieNode currentNode = root;
         for (int i = 0; i < key.length(); i++) {
             int codePoint = key.codePointAt(i);
@@ -65,10 +65,10 @@ public class Trie {
         return getValues(currentNode);
     }
 
-    private Collection<? extends List<Integer>> getValues(TrieNode node) {
-        List<List<Integer>> values = new LinkedList<>();
+    private List<Short> getValues(TrieNode node) {
+        List<Short> values = new LinkedList<>();
         if (node.isEndOfWord) {
-            values.add(node.values);
+            values.addAll(node.values);
         }
         for (TrieNode child : node.children) {
             values.addAll(getValues(child));
