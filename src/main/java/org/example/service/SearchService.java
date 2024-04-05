@@ -10,7 +10,6 @@ import java.util.*;
 
 public class SearchService {
     private static long initTime;
-    Runtime rn = Runtime.getRuntime();
 
     public Trie initialize(String dataFilePath, int indexedColumnId) throws IOException {
         long startTime = System.currentTimeMillis();
@@ -45,8 +44,6 @@ public class SearchService {
         for (Map.Entry<String, List<Short>> entry : data.entrySet()) {
             trie.insert(entry.getKey(), entry.getValue());
         }
-
-        System.out.println(Double.parseDouble(String.valueOf((rn.totalMemory() - rn.freeMemory() - 7*1024*1024)))/1024/1024);
 
         initTime = System.currentTimeMillis() - startTime;
         return trie;

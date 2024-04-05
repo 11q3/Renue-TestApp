@@ -3,6 +3,7 @@ package org.example.util;
 import java.util.*;
 
 public class Trie {
+    Runtime rn = Runtime.getRuntime();
     private static class TrieNode {
         boolean isEndOfWord;
         List<TrieNode> children;
@@ -58,7 +59,7 @@ public class Trie {
             int codePoint = key.codePointAt(i);
             TrieNode childNode = currentNode.getChild(codePoint);
             if (childNode == null) {
-                return Collections.emptyList();
+                return null;
             }
             currentNode = childNode;
         }
