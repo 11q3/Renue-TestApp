@@ -18,7 +18,7 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <artifactId>maven-jar-plugin</artifactId>cd
                 <version>3.2.0</version>
                 <configuration>
                     <archive>

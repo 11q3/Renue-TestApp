@@ -3,35 +3,6 @@ package org.example.util;
 import java.util.*;
 
 public class Trie {
-    Runtime rn = Runtime.getRuntime();
-    private static class TrieNode {
-        boolean isEndOfWord;
-        List<TrieNode> children;
-        int codePoint;
-        List<Short> values;
-
-        public TrieNode() {
-            children = new ArrayList<>();
-            values = new ArrayList<>();
-            isEndOfWord = false;
-            codePoint = -1;
-        }
-
-        public void addChild(int codePoint, TrieNode node) {
-            node.codePoint = codePoint;
-            children.add(node);
-        }
-
-        public TrieNode getChild(int codePoint) {
-            for (TrieNode node : children) {
-                if (node.codePoint == codePoint) {
-                    return node;
-                }
-            }
-            return null;
-        }
-    }
-
     private final TrieNode root;
 
     public Trie() {
@@ -75,5 +46,33 @@ public class Trie {
             values.addAll(getValues(child));
         }
         return values;
+    }
+
+    private static class TrieNode {
+        boolean isEndOfWord;
+        List<TrieNode> children;
+        int codePoint;
+        List<Short> values;
+
+        public TrieNode() {
+            children = new ArrayList<>();
+            values = new ArrayList<>();
+            isEndOfWord = false;
+            codePoint = -1;
+        }
+
+        public void addChild(int codePoint, TrieNode node) {
+            node.codePoint = codePoint;
+            children.add(node);
+        }
+
+        public TrieNode getChild(int codePoint) {
+            for (TrieNode node : children) {
+                if (node.codePoint == codePoint) {
+                    return node;
+                }
+            }
+            return null;
+        }
     }
 }
