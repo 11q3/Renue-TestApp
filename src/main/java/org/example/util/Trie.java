@@ -49,7 +49,7 @@ public class Trie {
             }
             currentNode = childNode;
         }
-        currentNode.values = values;
+        currentNode.values.addAll(values);
         currentNode.isEndOfWord = true;
     }
 
@@ -59,7 +59,7 @@ public class Trie {
             int codePoint = key.codePointAt(i);
             TrieNode childNode = currentNode.getChild(codePoint);
             if (childNode == null) {
-                return null;
+                return Collections.emptyList();
             }
             currentNode = childNode;
         }

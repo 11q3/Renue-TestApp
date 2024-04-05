@@ -15,34 +15,14 @@ public class SearchService {
         long startTime = System.currentTimeMillis();
         Trie trie = new Trie();
 
-        Map<String, List<Short>> data = new HashMap<>();
-
         try (BufferedReader br = new BufferedReader(new FileReader(dataFilePath))) {
-            StringBuilder values = new StringBuilder();
-            List<String> valuesList;
             String line;
-
-            while ((line = br.readLine())!= null) {
-
-                values.setLength(0);
-
-                for (String s : line.replace("\"", "").split(",")) {
-                    values.append(s).append(",");
-                }
-
-                valuesList = List.of(values.toString().trim().split(","));
-                String key = valuesList.get(indexedColumnId);
-                short value = Short.parseShort(valuesList.get(0));
-
-                if (!data.containsKey(key)) {
-                    data.put(key, new ArrayList<>());
-                }
-                data.get(key).add(value);
+            while ((line = br.readLine()) != null) {
+                String[] values = line.replace("\"", "").split(",");
+                String key = values[indexedColumnId];
+                short value = Short.parseShort(values[0]);
+                trie.insert(key, Collections.singletonList(value));
             }
-        }
-
-        for (Map.Entry<String, List<Short>> entry : data.entrySet()) {
-            trie.insert(entry.getKey(), entry.getValue());
         }
 
         initTime = System.currentTimeMillis() - startTime;
