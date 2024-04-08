@@ -1,18 +1,16 @@
 package org.example.io;
 
 import org.example.data.SearchResult;
-import org.example.util.Trie;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class InputReader {
-    public static List<SearchResult> readInput(String inputFilePath, Trie trie) {
-        if (inputFilePath == null || trie == null) {
-            throw new IllegalArgumentException("Input file path or Trie cannot be null.");
+    public static List<SearchResult> readInput(String inputFilePath, Map<String, List<Short>> data) {
+        if (inputFilePath == null || data == null) {
+            throw new IllegalArgumentException("Input file path or data cannot be null.");
         }
 
         List<SearchResult> results = new ArrayList<>();
@@ -20,12 +18,19 @@ public class InputReader {
         try (BufferedReader br = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
 
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine())!= null) {
                 long startTime = System.currentTimeMillis();
-                List<Short> matches = trie.search(line);
+                List<Short> matches = new ArrayList<>();
 
-                long endTime = System.currentTimeMillis();
-                results.add(new SearchResult(line, matches, endTime - startTime));
+                for (Map.Entry<String, List<Short>> entry : data.entrySet()) {
+                    if (entry.getKey().startsWith(line)) {
+                        matches.addAll(entry.getValue());
+                    }
+                }
+
+                if (!matches.isEmpty()) {
+                    results.add(new SearchResult(line, matches, System.currentTimeMillis() - startTime));
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,7 +1,6 @@
-
 package org.example.service;
 
-import org.example.util.Trie;
+import org.example.data.SearchResult;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,22 +10,26 @@ import java.util.*;
 public class SearchService {
     private static long initTime;
 
-    public Trie initialize(String dataFilePath, int indexedColumnId) throws IOException {
+    public Map<String, List<Short>> initialize(String dataFilePath, int indexedColumnId) throws IOException {
         long startTime = System.currentTimeMillis();
-        Trie trie = new Trie();
+        Map<String, List<Short>> data = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(dataFilePath))) {
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine())!= null) {
                 String[] values = line.replace("\"", "").split(",");
                 String key = values[indexedColumnId];
                 short value = Short.parseShort(values[0]);
-                trie.insert(key, Collections.singletonList(value));
+
+                if (!data.containsKey(key)) {
+                    data.put(key, new ArrayList<>());
+                }
+                data.get(key).add(value);
             }
         }
 
         initTime = System.currentTimeMillis() - startTime;
-        return trie;
+        return data;
     }
 
     public long getInitTime() {
