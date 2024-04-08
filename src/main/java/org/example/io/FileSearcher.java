@@ -7,8 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class InputReader {
-    public static List<SearchResult> readInput(String inputFilePath, Map<String, List<Short>> data) {
+public class FileSearcher {
+    public static List<SearchResult> searchInFile(String inputFilePath, Map<String, List<Short>> data) {
         if (inputFilePath == null || data == null) {
             throw new IllegalArgumentException("Input file path or data cannot be null.");
         }
@@ -30,6 +30,8 @@ public class InputReader {
 
                 if (!matches.isEmpty()) {
                     results.add(new SearchResult(line, matches, System.currentTimeMillis() - startTime));
+                } else {
+                    results.add(new SearchResult(line, Collections.emptyList(), System.currentTimeMillis() - startTime));
                 }
             }
         } catch (IOException e) {

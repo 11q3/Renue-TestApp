@@ -1,19 +1,12 @@
 package org.example;
 
 import org.example.data.SearchResult;
-import org.example.io.InputReader;
+import org.example.io.FileSearcher;
 import org.example.io.JSONWriter;
 import org.example.service.SearchService;
-import org.example.util.Trie;
 
-import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.util.List;
-
-import org.example.data.SearchResult;
-import org.example.io.InputReader;
-import org.example.io.JSONWriter;
-import org.example.service.SearchService;
 
 import java.io.IOException;
 import java.util.*;
@@ -42,7 +35,7 @@ public class Main {
                 (double) (ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed()) / 1_048_576.0) + " MB");
         System.out.println();
 
-        List<SearchResult> results = InputReader.readInput(inputFilePath, data);
+        List<SearchResult> results = FileSearcher.searchInFile(inputFilePath, data);
         JSONWriter.outputResults(outputFilePath, results, searchService.getInitTime());
     }
 }
