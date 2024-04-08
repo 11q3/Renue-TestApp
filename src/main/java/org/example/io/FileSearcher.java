@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class FileSearcher {
-    public static List<SearchResult> searchInFile(String inputFilePath, Map<String, List<Short>> data) {
+    public static List<SearchResult> searchInFile(String inputFilePath, Map<String, List<Integer>> data) {
         if (inputFilePath == null || data == null) {
             throw new IllegalArgumentException("Input file path or data cannot be null.");
         }
@@ -20,9 +20,9 @@ public class FileSearcher {
 
             while ((line = br.readLine())!= null) {
                 long startTime = System.currentTimeMillis();
-                List<Short> matches = new ArrayList<>();
+                List<Integer> matches = new ArrayList<>();
 
-                for (Map.Entry<String, List<Short>> entry : data.entrySet()) {
+                for (Map.Entry<String, List<Integer>> entry : data.entrySet()) {
                     if (entry.getKey().startsWith(line)) {
                         matches.addAll(entry.getValue());
                     }

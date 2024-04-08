@@ -5,7 +5,6 @@ import org.example.io.FileSearcher;
 import org.example.io.JSONWriter;
 import org.example.service.SearchService;
 
-import java.lang.management.ManagementFactory;
 import java.util.List;
 
 import java.io.IOException;
@@ -28,12 +27,7 @@ public class Main {
         String outputFilePath = args[7];
 
         SearchService searchService = new SearchService();
-        Map<String, List<Short>> data = searchService.initialize(csvFile, indexedColumnId);
-
-        System.out.println("Used memory in heap: " + (double) (ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed()) / 1_048_576.0 + " MB");
-        System.out.println("Free memory in heap: " + ((double) (ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getMax()) / 1_048_576.0 -
-                (double) (ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed()) / 1_048_576.0) + " MB");
-        System.out.println();
+        Map<String, List<Integer>> data = searchService.initialize(csvFile, indexedColumnId);
 
         List<SearchResult> results = FileSearcher.searchInFile(inputFilePath, data);
         JSONWriter.outputResults(outputFilePath, results, searchService.getInitTime());
