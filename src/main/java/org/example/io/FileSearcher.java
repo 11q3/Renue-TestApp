@@ -19,7 +19,7 @@ public class FileSearcher {
             String line;
 
             while ((line = br.readLine())!= null) {
-                long startTime = System.currentTimeMillis();
+                long startTime = System.nanoTime();
                 List<Integer> matches = new ArrayList<>();
 
                 for (Map.Entry<String, List<Integer>> entry : data.entrySet()) {
@@ -29,9 +29,9 @@ public class FileSearcher {
                 }
 
                 if (!matches.isEmpty()) {
-                    results.add(new SearchResult(line, matches, System.currentTimeMillis() - startTime));
+                    results.add(new SearchResult(line, matches, System.nanoTime() - startTime));
                 } else {
-                    results.add(new SearchResult(line, Collections.emptyList(), System.currentTimeMillis() - startTime));
+                    results.add(new SearchResult(line, Collections.emptyList(), System.nanoTime() - startTime));
                 }
             }
         } catch (IOException e) {

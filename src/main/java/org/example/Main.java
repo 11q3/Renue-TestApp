@@ -5,6 +5,8 @@ import org.example.io.FileSearcher;
 import org.example.io.JSONWriter;
 import org.example.service.SearchService;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import java.io.IOException;
@@ -25,6 +27,16 @@ public class Main {
         int indexedColumnId = Integer.parseInt(args[3]) - 1;
         String inputFilePath = args[5];
         String outputFilePath = args[7];
+
+        if(!Files.exists(Paths.get(csvFile))) {
+            System.err.println("File " + csvFile + "is empty or does not exists. ");
+            System.exit(1);
+        }
+
+        if(!Files.exists(Paths.get(inputFilePath))) {
+            System.err.println("File " + inputFilePath + "is empty or does not exists. ");
+            System.exit(1);
+        }
 
         SearchService searchService = new SearchService();
         Map<String, List<Integer>> data = searchService.initialize(csvFile, indexedColumnId);

@@ -41,6 +41,8 @@ public class JSONWriter {
             }
             writer.write("]}");
             writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
