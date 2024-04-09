@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class FileSearcher {
     public static List<SearchResult> searchInFile(String inputFilePath, Map<String, List<Integer>> data) {
@@ -29,7 +30,7 @@ public class FileSearcher {
                 }
 
                 if (!matches.isEmpty()) {
-                    results.add(new SearchResult(line, matches, System.nanoTime() - startTime));
+                    results.add(new SearchResult(line, matches, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime)));
                 } else {
                     results.add(new SearchResult(line, Collections.emptyList(), System.nanoTime() - startTime));
                 }

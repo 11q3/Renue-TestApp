@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class SearchService {
     private static long initTime;
@@ -31,7 +32,7 @@ public class SearchService {
             }
         }
 
-        initTime = System.nanoTime() - startTime;
+        initTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
         return data;
     }
 
